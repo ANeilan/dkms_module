@@ -14,5 +14,5 @@ Clone the repository to (or copy its content to) /usr/src/vmware-modules-14.
 Then, as root, declare and setup the module in DKMS using the following command:
 
 ```
-# dkms install vmware-modules/14 -k $(uname -r)
+# dkms install vmware-modules/15 -k $(uname -r)
 ```
