@@ -18,8 +18,8 @@
 # install kernel modules.
 #
 
-KERNEL := $(shell uname -r)
-HEADERS := /usr/src/linux-headers-$(KERNEL)/include
+KERNEL := $(KERNELRELEASE)
+HEADERS := /usr/src/kernels/$(KERNEL)/include
 GCC := $(shell vmware-modconfig --console --get-gcc)
 DEST := /lib/modules/$(KERNEL)/vmware
 
@@ -34,10 +34,10 @@ all: $(LOCAL_MODULES)
 	rm -rf $(DEST)
 	depmod
 
-/usr/src/linux-headers-$(KERNEL)/include/linux/version.h:
-	ln -s /usr/src/linux-headers-$(KERNEL)/include/generated/uapi/linux/version.h /usr/src/linux-headers-$(KERNEL)/include/linux/version.h
+/usr/src/kernels/$(KERNEL)/include/linux/version.h:
+	ln -s /usr/src/kernels/$(KERNEL)/include/generated/uapi/linux/version.h /usr/src/kernels/$(KERNEL)/include/linux/version.h
 
-%.ko: /usr/src/linux-headers-$(KERNEL)/include/linux/version.h
+%.ko: /usr/src/kernels/$(KERNEL)/include/linux/version.h
 	vmware-modconfig --console --build-mod -k $(KERNEL) $* $(GCC) $(HEADERS) vmware/
 	cp -f $(DEST)/$*.ko .
 
